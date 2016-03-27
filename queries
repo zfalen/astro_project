@@ -1,0 +1,36 @@
+select top 100000
+    poa.objID, spp.FEHADOP as metallicity_FeH, poa.b as G_Lat, poa.l as G_Long, poa.type, sta.DISTV_KPC as distance_kpc
+
+from sppParams as spp
+    join PhotoObjAll as poa
+        on spp.bestObjID = poa.objID
+    join segueTargetAll as sta
+        on sta.objID = poa.objID
+
+where
+   spp.fehAdop <> -9999
+   and poa.objID <> 0
+   and poa.type = 6
+   and poa.l < 10
+   and poa.l > -10
+
+
+
+
+
+
+select top 100000
+    poa.objID, spp.FEHADOP as metallicity_FeH, poa.b as G_Lat, poa.l as G_Long, poa.type, sta.DISTV_KPC as distance_kpc
+
+from sppParams as spp
+    join PhotoObjAll as poa
+        on spp.bestObjID = poa.objID
+    join segueTargetAll as sta
+        on sta.objID = poa.objID
+
+where
+   spp.fehAdop <> -9999
+   and poa.objID <> 0
+   and poa.type = 6
+   and poa.b < 10
+   and poa.b > -10
