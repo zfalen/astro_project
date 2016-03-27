@@ -1,0 +1,69 @@
+<head>
+  <link rel="stylesheet" href="../public/css/style.css"></link>
+
+  <script   src="https://code.jquery.com/jquery-2.2.2.min.js"   integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="   crossorigin="anonymous"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
+</head>
+
+<h1 id="title">Galactic Lat. < 10° and >-10°</h1>
+<h4>Scale 100px = 1 PC &#8594;<div style="border-left: 2px solid #000; height: 10px;display: inline-block; margin-left: 10px"></div><div style="width: 100px; height: 4px; border-top: 2px solid #000; display: inline-block;"></div><div style="border-left: 2px solid #000; height: 10px;display: inline-block;"></div></h4>
+<h4>Total # Stars Measured: <div id="starCount" style="display: inline"></div></h4>
+
+<div id="sun"></div>
+<div id="galacticCenter"></div>
+
+<div id="gradientKey">
+  <h1>-2.5</h1>
+  <h2>0</h3>
+  <h3>2.5</h3>
+</div>
+
+
+<script>
+
+  TweenMax.to("#galacticCenter", 0, {x: 850})
+
+  $.getJSON('../public/data_latitude.json', function(data) {
+
+    var counter = 1;
+
+    var maxMetallicity = 2.5;
+    var minMetallicity = -2.5;
+
+    function getColor(percent,start,end) {
+
+  		 var a = percent,
+  		 b = end*a;
+  		 c = b+start;
+
+  		//Return a CSS HSL string
+  		return 'hsl('+c+',100%,50%)';
+  	}
+
+    $('#starCount').append('<h2 style="display:inline">'+data.data.length+'</h2>')
+
+    data.data.forEach(function(element, index, array){
+
+      var posXParsecToPx = Math.sin(element.G_Long)*element.distance_kpc;
+      var posYParsecToPx = Math.cos(element.G_Long)*element.distance_kpc;
+
+
+      $('body').append('<div id=data' + counter + ' class="dataPoint">')
+
+      // CONVERT TO 100PX = 1 PARSEC AND RENDER w/COLOR
+      if (element.metallicity_FeH >= 0){
+        var colorPercent = element.metallicity_FeH / maxMetallicity;
+        TweenMax.to($('#data'+counter), 0, {x: posXParsecToPx * 100, y: posYParsecToPx * 100, backgroundColor: getColor(colorPercent,180,300)})
+      } else {
+        var colorPercent = element.metallicity_FeH / minMetallicity;
+        TweenMax.to($('#data'+counter), 0, {x: posXParsecToPx * 100, y: posYParsecToPx * 100, backgroundColor: getColor(colorPercent,0,180)})
+      }
+
+
+      counter++;
+    })
+
+
+
+  });
+</script>

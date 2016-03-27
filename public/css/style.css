@@ -1,0 +1,90 @@
+#sun {
+  z-index: 999;
+  position: absolute;
+  left: 50%;
+  margin-left: -50px;
+  top: calc(50% - 25px);
+  width: 50px;
+  height: 50px;
+  background-image: url('../img/sun.png');
+  background-size: cover;
+}
+
+#galacticCenter {
+  position: absolute;
+  left: 50%;
+  margin-left: -50px;
+  top: calc(50% - 25px);
+  width: 50px;
+  height: 50px;
+  background-image: url('../img/blackhole.png');
+  background-size: cover;
+}
+
+#gradientKey {
+  z-index: 999;
+  height: 50px;
+  width: 75%;
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  margin-left: -40%;
+  background: linear-gradient(90deg, hsl(0,100%,50%),hsl(60,100%,50%),hsl(120,100%,50%),hsl(180,100%,50%),hsl(240,100%,50%), hsl(300,100%,50%));
+  box-shadow: rgba(32,32,32,.5) 2px 2px 2px;
+}
+
+#gradientKey h1 {
+  position: absolute;
+  display: block;
+  top: -45px;
+  left: -20px;
+  font-size: 1.5em;
+}
+
+#gradientKey h2 {
+  position: absolute;
+  display: block;
+  top: -50px;
+  left: 50%;
+}
+
+#gradientKey h3 {
+  position: absolute;
+  display: block;
+  top: -55px;
+  left: 99%;
+  font-size: 1.5em;
+}
+
+.dataPoint {
+  height: 5px;
+  width: 5px;
+  background-color: green;
+  position: absolute;
+  left: 50%;
+  margin-left: -50px;
+  top: 50%;
+}
+
+.mainText {
+  color: #fff;
+  PADDING-LEFT: 5%;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.btn {
+  background: none;
+  color: #fff;
+  border: #fff 1px solid;
+  padding: 10 40px;
+  font-size: 15px;
+  font-family: 'Ubuntu', sans-serif;
+  transition: background-color .5s, color .5s;
+  display: block;
+}
+
+.btn:hover {
+  color: #000;
+  background-color: #fff;
+    transition: background-color .5s, color .5s
+}
