@@ -17,8 +17,6 @@ var session      = require('express-session');
 
 var config = require('./config');
 
-// var configDB = require('./config/database.js');
-
 var options = {
   server:  { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
   replset: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }
@@ -29,6 +27,94 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
+
+function getColor(percent,start,end) {
+
+   var a = percent,
+   b = end*a;
+   c = b+start;
+
+  //Return a CSS HSL string
+  return 'hsl('+c+',100%,50%)';
+}
+
+var maxMetallicity = 2.5;
+var minMetallicity = -2.5;
+
+var latitude = [];
+fs.readFile('./public/data_latitude.json', 'utf8', function (err, data) {
+    if (err) throw err; // we'll not consider error handling for now
+    var obj = JSON.parse(data);
+
+    obj.data.forEach(function(entry){
+      if (entry.metallicity_FeH >= 0){
+        var colorPercent = entry.metallicity_FeH / maxMetallicity;
+        latitude.push(
+          { objID: entry.objID,
+            metallicity: entry.metallicity_FeH,
+            posX: (Math.sin(entry.G_Long)*entry.distance_kpc) * 100,
+            posY: (Math.cos(entry.G_Long)*entry.distance_kpc) * 100,
+            color: getColor(colorPercent,180,300)
+          }
+        )
+      } else {
+          var colorPercent = 1 - (entry.metallicity_FeH / minMetallicity);
+          latitude.push(
+            { objID: entry.objID,
+              metallicity: entry.metallicity_FeH,
+              posX: (Math.sin(entry.G_Long)*entry.distance_kpc) * 100,
+              posY: (Math.cos(entry.G_Long)*entry.distance_kpc) * 100,
+              color: getColor(colorPercent,0,180)
+            }
+          )
+      }
+    })
+});
+
+
+var longitude = [];
+fs.readFile('./public/data_longitude.json', 'utf8', function (err, data) {
+    if (err) throw err; // we'll not consider error handling for now
+    var obj = JSON.parse(data);
+
+    obj.data.forEach(function(entry){
+      if (entry.metallicity_FeH >= 0){
+        var colorPercent = entry.metallicity_FeH / maxMetallicity;
+        longitude.push(
+          { objID: entry.objID,
+            metallicity: entry.metallicity_FeH,
+            posX: (Math.sin(entry.G_Lat)*entry.distance_kpc) * 100,
+            posY: (Math.cos(entry.G_Lat)*entry.distance_kpc) * 100,
+            color: getColor(colorPercent,180,300)
+          }
+        )
+      } else {
+          var colorPercent = 1 - (entry.metallicity_FeH / minMetallicity);
+          longitude.push(
+            { objID: entry.objID,
+              metallicity: entry.metallicity_FeH,
+              posX: (Math.sin(entry.G_Lat)*entry.distance_kpc) * 100,
+              posY: (Math.cos(entry.G_Lat)*entry.distance_kpc) * 100,
+              color: getColor(colorPercent,0,180)
+            }
+          )
+      }
+    })
+});
+
+app.get('/getLatitude', function(req, res) {
+  res.send(latitude);
+});
+
+app.get('/getLongitude', function(req, res) {
+  res.send(longitude);
+});
+
+
+
 
 if (process.env.NODE_ENV === 'production') {
   console.log('*****************-----------------------Running in production mode---------------------**************************');
@@ -60,6 +146,7 @@ if (process.env.NODE_ENV === 'production') {
       });
   });
 }
+
 
 app.use('/css', express.static('css'));
 app.use('/img', express.static('img'));

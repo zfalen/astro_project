@@ -23,47 +23,26 @@
 
   TweenMax.to("#galacticCenter", 0, {x: 850})
 
-  $.getJSON('../public/data_latitude.json', function(data) {
-
     var counter = 1;
 
-    var maxMetallicity = 2.5;
-    var minMetallicity = -2.5;
+  $.ajax({
+            url:'/getLatitude',
+            dataType:"json",
+            cache: false,
+            success: function(data){
 
-    function getColor(percent,start,end) {
+                $('#starCount').append('<h2 style="display:inline">'+data.length+'</h2>')
 
-  		 var a = percent,
-  		 b = end*a;
-  		 c = b+start;
+                for(var i=0; i < data.length; i++){
+                  $('body').append('<div id=data' + i + ' class="dataPoint">');
+                  $('#data'+i).attr('style', 'transform:translateX('+data[i].posX+'px) translateY('+data[i].posY+'px); -webkit-transform:translateX('+data[i].posX+'px) translateY('+data[i].posY+'px); background-color:'+data[i].color);
+                }
 
-  		//Return a CSS HSL string
-  		return 'hsl('+c+',100%,50%)';
-  	}
-
-    $('#starCount').append('<h2 style="display:inline">'+data.data.length+'</h2>')
-
-    data.data.forEach(function(element, index, array){
-
-      var posXParsecToPx = Math.sin(element.G_Long)*element.distance_kpc;
-      var posYParsecToPx = Math.cos(element.G_Long)*element.distance_kpc;
-
-
-      $('body').append('<div id=data' + counter + ' class="dataPoint">')
-
-      // CONVERT TO 100PX = 1 PARSEC AND RENDER w/COLOR
-      if (element.metallicity_FeH >= 0){
-        var colorPercent = element.metallicity_FeH / maxMetallicity;
-        TweenMax.to($('#data'+counter), 0, {x: posXParsecToPx * 100, y: posYParsecToPx * 100, backgroundColor: getColor(colorPercent,180,300)})
-      } else {
-        var colorPercent = element.metallicity_FeH / minMetallicity;
-        TweenMax.to($('#data'+counter), 0, {x: posXParsecToPx * 100, y: posYParsecToPx * 100, backgroundColor: getColor(colorPercent,0,180)})
-      }
+            }.bind(this),
+            error: function(xhr, status, err){
+                console.error('url', status, err.toString());
+            }.bind(this)
+        });
 
 
-      counter++;
-    })
-
-
-
-  });
 </script>
