@@ -4,8 +4,7 @@ var webpack = require('webpack');
 module.exports = {
   devtool: 'eval',
   entry: {
-    main: ['webpack-hot-middleware/client',
-    './client/Index']
+    main: ['webpack-hot-middleware/client']
   },
     output: {
     path: path.join(__dirname, 'static'),
