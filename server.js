@@ -41,6 +41,42 @@ function getColor(percent,start,end) {
   return 'hsl('+c+',100%,50%)';
 }
 
+function getMetallicityClass(metallicity){
+  if (metallicity >= -2.5 && metallicity < -2){
+    return(1)
+  }
+  if (metallicity >= -2 && metallicity < -1.5){
+    return(2)
+  }
+  if (metallicity >= -1.5 && metallicity < -1){
+    return(3)
+  }
+  if (metallicity >= -1 && metallicity < -.5){
+    return(4)
+  }
+  if (metallicity >= -.5 && metallicity < 0){
+    return(5)
+  }
+  if (metallicity >= 0 && metallicity < .5){
+    return(6)
+  }
+  if (metallicity >= .5 && metallicity < 1){
+    return(7)
+  }
+  if (metallicity >= 1 && metallicity < 1.5){
+    return(8)
+  }
+  if (metallicity >= 1.5 && metallicity < 2){
+    return(9)
+  }
+  if (metallicity >= 2 && metallicity <= 2.5){
+    return(10)
+  }
+  if (metallicity < -2.5){
+    return(11)
+  }
+}
+
 var maxMetallicity = 2.5;
 var minMetallicity = -2.5;
 
@@ -54,7 +90,7 @@ fs.readFile('./public/data_latitude.json', 'utf8', function (err, data) {
         var colorPercent = entry.metallicity_FeH / maxMetallicity;
         latitude.push(
           { objID: entry.objID,
-            metallicity: entry.metallicity_FeH,
+            metallicityClass: getMetallicityClass(entry.metallicity_FeH),
             posX: (Math.sin(entry.G_Long)*entry.distance_kpc) * 100,
             posY: (Math.cos(entry.G_Long)*entry.distance_kpc) * 100,
             color: getColor(colorPercent,180,300)
@@ -64,7 +100,7 @@ fs.readFile('./public/data_latitude.json', 'utf8', function (err, data) {
           var colorPercent = 1 - (entry.metallicity_FeH / minMetallicity);
           latitude.push(
             { objID: entry.objID,
-              metallicity: entry.metallicity_FeH,
+              metallicityClass: getMetallicityClass(entry.metallicity_FeH),
               posX: (Math.sin(entry.G_Long)*entry.distance_kpc) * 100,
               posY: (Math.cos(entry.G_Long)*entry.distance_kpc) * 100,
               color: getColor(colorPercent,0,180)
@@ -83,9 +119,10 @@ fs.readFile('./public/data_longitude.json', 'utf8', function (err, data) {
     obj.data.forEach(function(entry){
       if (entry.metallicity_FeH >= 0){
         var colorPercent = entry.metallicity_FeH / maxMetallicity;
+
         longitude.push(
           { objID: entry.objID,
-            metallicity: entry.metallicity_FeH,
+            metallicityClass: getMetallicityClass(entry.metallicity_FeH),
             posX: (Math.sin(entry.G_Lat)*entry.distance_kpc) * 100,
             posY: (Math.cos(entry.G_Lat)*entry.distance_kpc) * 100,
             color: getColor(colorPercent,180,300)
@@ -95,7 +132,7 @@ fs.readFile('./public/data_longitude.json', 'utf8', function (err, data) {
           var colorPercent = 1 - (entry.metallicity_FeH / minMetallicity);
           longitude.push(
             { objID: entry.objID,
-              metallicity: entry.metallicity_FeH,
+              metallicityClass: getMetallicityClass(entry.metallicity_FeH),
               posX: (Math.sin(entry.G_Lat)*entry.distance_kpc) * 100,
               posY: (Math.cos(entry.G_Lat)*entry.distance_kpc) * 100,
               color: getColor(colorPercent,0,180)

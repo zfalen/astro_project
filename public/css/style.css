@@ -1,3 +1,20 @@
+body {
+  background-color: rgb(40,44,52);
+}
+
+input {
+  transform: scale(1.5);
+}
+
+label {
+  color: #fff !important;
+}
+
+.title {
+  color: #fff;
+  z-index: 999;
+}
+
 #sun {
   z-index: 999;
   position: absolute;

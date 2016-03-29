@@ -3,11 +3,25 @@
 
   <script   src="https://code.jquery.com/jquery-2.2.2.min.js"   integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="   crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
+    <script src="../jquery.async.js"></script>
 </head>
 
-<h1 id="title">Galactic Lat. < 10° and >-10°</h1>
-<h4>Scale 100px = 1 PC &#8594;<div style="border-left: 2px solid #000; height: 10px;display: inline-block; margin-left: 10px"></div><div style="width: 100px; height: 4px; border-top: 2px solid #000; display: inline-block;"></div><div style="border-left: 2px solid #000; height: 10px;display: inline-block;"></div></h4>
-<h4>Total # Stars Measured: <div id="starCount" style="display: inline"></div></h4>
+<h1 class="title">Galactic Lat. < 10° and >-10°</h1>
+<h4 class="title">Scale 100px = 1 PC &#8594;<div style="border-left: 2px solid #fff; height: 10px;display: inline-block; margin-left: 10px"></div><div style="width: 100px; height: 4px; border-top: 2px solid #fff; display: inline-block;"></div><div style="border-left: 2px solid #fff; height: 10px;display: inline-block;"></div></h4>
+<h4 class="title">Total # Stars Measured: <div id="starCount" style="display: inline"></div></h4>
+
+<h4 class="title" style="margin-bottom: 5px">Toggle Metallicities:</h4>
+<input type="checkbox" id="class11" onclick="showClasses()" checked><label> Less than -2.5</label></input><br>
+<input type="checkbox" id="class1" onclick="showClasses()" checked><label> -2.5 - -2</label></input><br>
+<input type="checkbox" id="class2" onclick="showClasses()" checked><label> -2 - -1.5</label></input><br>
+<input type="checkbox" id="class3" onclick="showClasses()" checked><label> -1.5 - -1</label></input><br>
+<input type="checkbox" id="class4" onclick="showClasses()" checked><label> -1 - -0.5</label></input><br>
+<input type="checkbox" id="class5" onclick="showClasses()" checked><label> -.5 - 0</label></input><br>
+<input type="checkbox" id="class6" onclick="showClasses()" checked><label> 0 - 0.5</label></input><br>
+<input type="checkbox" id="class7" onclick="showClasses()" checked><label> 0.5 - 1</label></input><br>
+<input type="checkbox" id="class8" onclick="showClasses()" checked><label> 1 - 1.5</label></input><br>
+<input type="checkbox" id="class9" onclick="showClasses()" checked><label> 1.5 - 2</label></input><br>
+<input type="checkbox" id="class10" onclick="showClasses()" checked><label> 2 - 2.5</label></input><br>
 
 <div id="sun"></div>
 <div id="galacticCenter"></div>
@@ -21,6 +35,98 @@
 
 <script>
 
+
+  function showClasses(){
+
+    if(document.getElementById('class1').checked)
+      {
+        $('.metal1').css('visibility', 'visible')
+      } else if(!document.getElementById('class1').checked)
+        {
+          $('.metal1').css('visibility', 'hidden')
+        }
+
+    if(document.getElementById('class2').checked)
+      {
+        $('.metal2').css('visibility', 'visible')
+      } else if(!document.getElementById('class2').checked)
+        {
+          $('.metal2').css('visibility', 'hidden')
+        }
+
+    if(document.getElementById('class3').checked)
+      {
+        $('.metal3').css('visibility', 'visible')
+      } else if(!document.getElementById('class3').checked)
+        {
+          $('.metal3').css('visibility', 'hidden')
+        }
+
+    if(document.getElementById('class4').checked)
+      {
+        $('.metal4').css('visibility', 'visible')
+      } else if(!document.getElementById('class4').checked)
+        {
+          $('.metal4').css('visibility', 'hidden')
+        }
+
+    if(document.getElementById('class5').checked)
+      {
+        $('.metal5').css('visibility', 'visible')
+      } else if(!document.getElementById('class5').checked)
+        {
+          $('.metal5').css('visibility', 'hidden')
+        }
+
+    if(document.getElementById('class6').checked)
+      {
+        $('.metal6').css('visibility', 'visible')
+      } else if(!document.getElementById('class6').checked)
+        {
+          $('.metal6').css('visibility', 'hidden')
+        }
+
+    if(document.getElementById('class7').checked)
+      {
+        $('.metal7').css('visibility', 'visible')
+      } else if(!document.getElementById('class7').checked)
+        {
+          $('.metal7').css('visibility', 'hidden')
+        }
+
+    if(document.getElementById('class8').checked)
+      {
+        $('.metal8').css('visibility', 'visible')
+      } else if(!document.getElementById('class8').checked)
+        {
+          $('.metal8').css('visibility', 'hidden')
+        }
+
+    if(document.getElementById('class9').checked)
+      {
+        $('.metal9').css('visibility', 'visible')
+      } else if(!document.getElementById('class9').checked)
+        {
+          $('.metal9').css('visibility', 'hidden')
+        }
+
+    if(document.getElementById('class10').checked)
+      {
+        $('.metal10').css('visibility', 'visible')
+      } else if(!document.getElementById('class10').checked)
+        {
+          $('.metal10').css('visibility', 'hidden')
+        }
+
+    if(document.getElementById('class11').checked)
+      {
+        $('.metal11').css('visibility', 'visible')
+      } else if(!document.getElementById('class11').checked)
+        {
+          $('.metal11').css('visibility', 'hidden')
+        }
+  }
+
   TweenMax.to("#galacticCenter", 0, {x: 850})
 
     var counter = 1;
@@ -31,13 +137,21 @@
             cache: false,
             success: function(data){
 
-                $('#starCount').append('<h2 style="display:inline">'+data.length+'</h2>')
-
-                for(var i=0; i < data.length; i++){
-                  $('body').append('<div id=data' + i + ' class="dataPoint">');
-                  $('#data'+i).attr('style', 'transform:translateX('+data[i].posX+'px) translateY('+data[i].posY+'px); -webkit-transform:translateX('+data[i].posX+'px) translateY('+data[i].posY+'px); background-color:'+data[i].color);
+              $(data).eachAsync({
+                delay: 0,
+                bulk: 500,
+                loop: function(index)
+                {
+                  $('#starCount').text(index + 1);
+                  $('body').append('<div id=data' + index + ' class="dataPoint">');
+                  $('#data'+index).attr('style', 'transform:translateX('+data[index].posX+'px) translateY('+data[index].posY+'px); -webkit-transform:translateX('+data[index].posX+'px) translateY('+data[index].posY+'px); background-color:'+data[index].color);
+                },
+                end: function(){
+                  alert('All stars have been mapped!')
                 }
+              })
 
+                TweenMax.to('.metal11',1,{scale: 1.5, opacity: .25, repeat: -1, yoyo: true})
             }.bind(this),
             error: function(xhr, status, err){
                 console.error('url', status, err.toString());
