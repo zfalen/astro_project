@@ -147,7 +147,7 @@
                   $('#data'+index).attr('style', 'transform:translateX('+data[index].posX+'px) translateY('+data[index].posY+'px); -webkit-transform:translateX('+data[index].posX+'px) translateY('+data[index].posY+'px); background-color:'+data[index].color);
                 },
                 end: function(){
-                  alert('All stars have been mapped!')
+                  alert($('#starCount').text() + ' stars have been mapped!')
                 }
               })
 
