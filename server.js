@@ -41,6 +41,8 @@ function getColor(percent,start,end) {
   return 'hsl('+c+',100%,50%)';
 }
 
+
+
 function getMetallicityClass(metallicity){
   if (metallicity >= -2.5 && metallicity < -2){
     return(1)
@@ -77,8 +79,8 @@ function getMetallicityClass(metallicity){
   }
 }
 
-var maxMetallicity = 2.5;
-var minMetallicity = -2.5;
+var maxMetallicity = 3.5;
+var minMetallicity = -3.5;
 
 var latitude = [];
 fs.readFile('./public/data_latitude.json', 'utf8', function (err, data) {
@@ -202,6 +204,10 @@ app.get('/latitude', function(req, res) {
 
 app.get('/longitude', function(req, res) {
   res.render('longitude')
+});
+
+app.get('/longitudeMega', function(req, res) {
+  res.render('longitude_mega')
 });
 
 

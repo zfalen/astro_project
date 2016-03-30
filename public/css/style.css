@@ -48,6 +48,7 @@ label {
   margin-left: -40%;
   background: linear-gradient(90deg, hsl(0,100%,50%),hsl(60,100%,50%),hsl(120,100%,50%),hsl(180,100%,50%),hsl(240,100%,50%), hsl(300,100%,50%));
   box-shadow: rgba(32,32,32,.5) 2px 2px 2px;
+  color: #fff;
 }
 
 #gradientKey h1 {

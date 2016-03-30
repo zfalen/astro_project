@@ -140,11 +140,10 @@ $.ajax({
 
             $('#starCount').append('<h2 style="display:inline">'+0+'</h2>')
 
-            var subset = _.sample(data, 20000);
 
-            $(subset).eachAsync({
+            $(data).eachAsync({
               delay: 0,
-              bulk: 500,
+              bulk: 1000,
               loop: function(index)
               {
                 $('#starCount').text(index + 1);
